@@ -11,16 +11,9 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class ApiError {
-
     private List<String> errors;
-
     private String message;
-
     private String reason;
-
     private HttpStatus status;
-
     private String timestamp;
-
-
 }

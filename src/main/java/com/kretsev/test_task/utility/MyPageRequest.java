@@ -4,7 +4,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 
 public class MyPageRequest extends PageRequest {
-
     private final int from;
 
     public MyPageRequest(int from, int size) {

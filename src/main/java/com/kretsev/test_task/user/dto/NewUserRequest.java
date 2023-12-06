@@ -9,7 +9,6 @@ import org.hibernate.validator.constraints.Length;
 @NoArgsConstructor
 @AllArgsConstructor
 public class NewUserRequest {
-
     @NotBlank
     @Length(max = 255)
     private String name;
@@ -22,5 +21,4 @@ public class NewUserRequest {
     @NotBlank
     @Length(max = 512)
     private String password;
-
 }
