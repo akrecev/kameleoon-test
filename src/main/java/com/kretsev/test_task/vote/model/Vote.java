@@ -24,6 +24,9 @@ public class Vote {
     @Column(name = "positive", nullable = false)
     private Boolean isPositive;
 
+    @Column(name = "created_on", nullable = false)
+    private LocalDateTime created;
+
     @ManyToOne
     @JoinColumn(name = "voter_id", nullable = false)
     private User voter;
@@ -32,6 +35,4 @@ public class Vote {
     @JoinColumn(name = "quote_id", nullable = false)
     private Quote quote;
 
-    @Column(name = "created_on", nullable = false)
-    private LocalDateTime created;
 }

@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.kretsev.test_task.user.mapper.UserMapper.toUser;
+import static com.kretsev.test_task.user.mapper.UserMapper.toNewUser;
 import static com.kretsev.test_task.user.mapper.UserMapper.toUserDto;
 
 @Service
@@ -27,7 +27,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public UserDto create(NewUserRequest newUserRequest) {
-        User user = userRepository.save(toUser(newUserRequest));
+        User user = userRepository.save(toNewUser(newUserRequest));
 
         return toUserDto(user);
     }
