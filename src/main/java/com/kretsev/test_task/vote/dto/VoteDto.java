@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class VoteDto {
     private Long id;
-    private Boolean isPositive;
+    private Boolean positive;
     private LocalDateTime created;
     private User voter;
     private Quote quote;

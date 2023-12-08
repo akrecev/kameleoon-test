@@ -45,9 +45,9 @@ public class QuoteServiceImpl implements QuoteService {
     }
 
     @Override
-    public QuoteDto getQuote(Long quoteId) {
+    public QuoteDto getQuote(Long id) {
         return toQuoteDto(
-                quoteRepository.findById(quoteId).orElseThrow(() -> new DataNotFoundException("Quote", quoteId))
+                quoteRepository.findById(id).orElseThrow(() -> new DataNotFoundException("Quote", id))
         );
     }
 
@@ -74,18 +74,18 @@ public class QuoteServiceImpl implements QuoteService {
     }
 
     @Override
-    public Map<LocalDate, Long> getEvolutionQuotes(Long quoteId) {
-        Map<LocalDate, Long> evolutionVotes = new TreeMap<>();
-        Quote quote = quoteRepository.findById(quoteId).orElseThrow(() -> new DataNotFoundException("Quote", quoteId));
+    public Map<LocalDate, Long> getEvolutionRating(Long id) {
+        Map<LocalDate, Long> evolutionRating = new TreeMap<>();
+        Quote quote = quoteRepository.findById(id).orElseThrow(() -> new DataNotFoundException("Quote", id));
         LocalDate date = quote.getCreated().toLocalDate();
         while (date.isBefore(LocalDate.now())) {
             Long positiveVotes = getPositiveVotes(quote, date);
             Long negativeVotes = getNegativeVotes(quote, date);
-            evolutionVotes.put(date, positiveVotes - negativeVotes);
+            evolutionRating.put(date, positiveVotes - negativeVotes);
             date = date.plusDays(1L);
         }
 
-        return evolutionVotes;
+        return evolutionRating;
     }
 
     @Override
@@ -106,8 +106,8 @@ public class QuoteServiceImpl implements QuoteService {
 
     @Override
     @Transactional
-    public void deleteById(Long quoteId) {
-        quoteRepository.deleteById(quoteId);
+    public void delete(Long id) {
+        quoteRepository.deleteById(id);
     }
 
     private static Long getNegativeVotes(Quote quote, LocalDate date) {

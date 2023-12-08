@@ -1,5 +1,6 @@
 package com.kretsev.test_task.user.model;
 
+import com.kretsev.test_task.quote.model.Quote;
 import com.kretsev.test_task.vote.model.Vote;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -35,4 +36,7 @@ public class User {
 
     @OneToMany(mappedBy = "voter")
     private Set<Vote> votes;
+
+    @OneToMany(mappedBy = "speaker")
+    private Set<Quote> quotes;
 }

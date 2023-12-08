@@ -2,7 +2,6 @@ package com.kretsev.test_task.quote.dto;
 
 import com.kretsev.test_task.user.dto.UserDto;
 import com.kretsev.test_task.vote.dto.VoteShortDto;
-import com.kretsev.test_task.vote.model.Vote;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

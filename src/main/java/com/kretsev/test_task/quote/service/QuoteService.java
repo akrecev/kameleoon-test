@@ -10,7 +10,7 @@ import java.util.Map;
 public interface QuoteService {
     QuoteDto create(NewQuoteRequest quoteRequest, Long speakerId);
 
-    QuoteDto getQuote(Long quoteId);
+    QuoteDto getQuote(Long id);
 
     QuoteDto getRandomQuote();
 
@@ -20,9 +20,9 @@ public interface QuoteService {
 
     List<QuoteDto> getWorseQuotes();
 
-    Map<LocalDate, Long> getEvolutionQuotes(Long quoteId);
+    Map<LocalDate, Long> getEvolutionRating(Long id);
 
     QuoteDto update(NewQuoteRequest quoteRequest, Long speakerId, Long quoteId);
 
-    void deleteById(Long quoteId);
+    void delete(Long id);
 }

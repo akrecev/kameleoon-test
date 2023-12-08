@@ -11,7 +11,4 @@ import lombok.NoArgsConstructor;
 public class NewVoteRequest {
     @NotNull
     private Boolean isPositive;
-
-    @NotNull
-    private Long quoteId;
 }
