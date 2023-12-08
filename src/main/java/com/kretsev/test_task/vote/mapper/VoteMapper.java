@@ -13,7 +13,7 @@ public class VoteMapper {
     public static VoteDto toVoteDto(Vote vote) {
         return new VoteDto(
                 vote.getId(),
-                vote.getIsPositive(),
+                vote.getPositive(),
                 vote.getCreated(),
                 vote.getVoter(),
                 vote.getQuote()
@@ -22,14 +22,14 @@ public class VoteMapper {
 
     public static VoteShortDto toVoteShortDto(Vote vote) {
         return new VoteShortDto(
-                vote.getIsPositive(),
+                vote.getPositive(),
                 vote.getCreated()
         );
     }
 
     public static Vote toNewVote(NewVoteRequest voteRequest) {
         return Vote.builder()
-                .isPositive(voteRequest.getIsPositive())
+                .positive(voteRequest.getIsPositive())
                 .build();
     }
 }

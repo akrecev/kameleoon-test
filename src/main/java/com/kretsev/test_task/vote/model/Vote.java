@@ -21,8 +21,9 @@ public class Vote {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "positive", nullable = false)
-    private Boolean isPositive;
+    private Boolean positive;
+
+    private Boolean negative;
 
     @Column(name = "created_on", nullable = false)
     private LocalDateTime created;
