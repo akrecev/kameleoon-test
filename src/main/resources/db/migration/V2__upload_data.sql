@@ -39,6 +39,8 @@ VALUES ('Be someone''s Santa; give ‘Fanta’!', '2000-01-01', 1),
 
 INSERT INTO votes (positive, negative, created_on, voter_id, quote_id)
 VALUES (TRUE, NULL, '2023-01-01', 2, 3),
-       (TRUE, NULL, '2023-01-01', 3, 3),
+       (TRUE, NULL, '2023-01-02', 3, 3),
+       (NULL, TRUE, '2023-01-01', 2, 4),
+       (NULL, TRUE, '2023-01-01', 3, 4),
        (TRUE, NULL, '2023-01-01', 3, 2),
        (NULL, TRUE, '2023-01-01', 3, 1);

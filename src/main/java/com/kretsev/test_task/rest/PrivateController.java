@@ -34,7 +34,7 @@ public class PrivateController {
     }
 
     @PostMapping("/{userId}/quotes/{quoteId}/votes")
-    public ResponseEntity<VoteDto> createQuote(
+    public ResponseEntity<VoteDto> createVote(
             @Positive @PathVariable Long userId,
             @Positive @PathVariable Long quoteId,
             @Valid @RequestBody NewVoteRequest voteRequest

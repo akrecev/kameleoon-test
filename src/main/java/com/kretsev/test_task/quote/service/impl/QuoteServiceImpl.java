@@ -18,10 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.TreeMap;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.kretsev.test_task.quote.mapper.QuoteMapper.*;
@@ -79,12 +76,25 @@ public class QuoteServiceImpl implements QuoteService {
     public Map<LocalDate, Long> getEvolutionRating(Long id) {
         Map<LocalDate, Long> evolutionRating = new TreeMap<>();
         Quote quote = quoteRepository.findById(id).orElseThrow(() -> new DataNotFoundException("Quote", id));
-        LocalDate date = quote.getCreated().toLocalDate();
-        while (date.isBefore(LocalDate.now())) {
-            Long positiveVotes = getPositiveVotes(quote, date);
-            Long negativeVotes = getNegativeVotes(quote, date);
-            evolutionRating.put(date, positiveVotes - negativeVotes);
-            date = date.plusDays(1L);
+        Set<Vote> votes = quote.getVotes();
+        for (Vote vote : votes) {
+            if (vote.getPositive() != null && vote.getPositive()) {
+                if (evolutionRating.containsKey(vote.getCreated().toLocalDate())) {
+                    evolutionRating.put(
+                            vote.getCreated().toLocalDate(), evolutionRating.get(vote.getCreated().toLocalDate()) + 1L
+                    );
+                } else {
+                    evolutionRating.put(vote.getCreated().toLocalDate(), 1L);
+                }
+            } else if (vote.getNegative() != null && vote.getNegative()) {
+                if (evolutionRating.containsKey(vote.getCreated().toLocalDate())) {
+                    evolutionRating.put(
+                            vote.getCreated().toLocalDate(), evolutionRating.get(vote.getCreated().toLocalDate()) - 1L
+                    );
+                } else {
+                    evolutionRating.put(vote.getCreated().toLocalDate(), -1L);
+                }
+            }
         }
 
         return evolutionRating;
@@ -110,20 +120,6 @@ public class QuoteServiceImpl implements QuoteService {
     @Transactional
     public void delete(Long id) {
         quoteRepository.deleteById(id);
-    }
-
-    private static Long getNegativeVotes(Quote quote, LocalDate date) {
-        return quote.getVotes().stream()
-                .filter(vote -> vote.getCreated().toLocalDate() == date)
-                .filter(Vote::getNegative)
-                .count();
-    }
-
-    private static Long getPositiveVotes(Quote quote, LocalDate date) {
-        return quote.getVotes().stream()
-                .filter(vote -> vote.getCreated().toLocalDate() == date)
-                .filter(Vote::getPositive)
-                .count();
     }
 
 }

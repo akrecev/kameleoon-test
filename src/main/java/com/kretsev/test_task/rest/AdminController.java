@@ -14,6 +14,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.util.Map;
+
 @Slf4j
 @RestController
 @RequiredArgsConstructor
@@ -38,6 +41,15 @@ public class AdminController {
         log.info("Get quote id={}", quoteId);
 
         return ResponseEntity.ok(quoteService.getQuote(quoteId));
+    }
+
+    @GetMapping("/quotes/{quoteId}/evolution")
+    public ResponseEntity<Map<LocalDate, Long>> getEvolutionRating(
+            @Positive @PathVariable Long quoteId
+    ) {
+        log.info("Get evolution rating for quote id={}", quoteId);
+
+        return ResponseEntity.ok(quoteService.getEvolutionRating(quoteId));
     }
 
 }
