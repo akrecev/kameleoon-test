@@ -33,5 +33,8 @@ CREATE TABLE IF NOT EXISTS votes
     CONSTRAINT pk_vote PRIMARY KEY (id),
     FOREIGN KEY (voter_id) REFERENCES users ON DELETE CASCADE,
     FOREIGN KEY (quote_id) REFERENCES quotes ON DELETE CASCADE,
-    UNIQUE (voter_id, quote_id)
+    UNIQUE (voter_id, quote_id),
+    CHECK (positive IS NOT NULL AND negative IS NULL
+        OR
+           positive IS NULL AND negative IS NOT NULL)
 );

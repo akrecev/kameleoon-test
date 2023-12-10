@@ -4,6 +4,7 @@ import com.kretsev.test_task.exception.ConflictException;
 import com.kretsev.test_task.exception.DataNotFoundException;
 import com.kretsev.test_task.quote.dto.NewQuoteRequest;
 import com.kretsev.test_task.quote.dto.QuoteDto;
+import com.kretsev.test_task.quote.dto.QuoteFullDto;
 import com.kretsev.test_task.quote.mapper.QuoteMapper;
 import com.kretsev.test_task.quote.model.Quote;
 import com.kretsev.test_task.quote.repository.QuoteRepository;
@@ -23,8 +24,7 @@ import java.util.Objects;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
-import static com.kretsev.test_task.quote.mapper.QuoteMapper.toNewQuote;
-import static com.kretsev.test_task.quote.mapper.QuoteMapper.toQuoteDto;
+import static com.kretsev.test_task.quote.mapper.QuoteMapper.*;
 
 @Service
 @Transactional(readOnly = true)
@@ -35,19 +35,21 @@ public class QuoteServiceImpl implements QuoteService {
 
     @Override
     @Transactional
-    public QuoteDto create(NewQuoteRequest quoteRequest, Long speakerId) {
+    public QuoteFullDto create(NewQuoteRequest quoteRequest, Long speakerId) {
         Quote quote = toNewQuote(quoteRequest);
         quote.setSpeaker(userRepository.findById(speakerId)
                 .orElseThrow(() -> new DataNotFoundException("User", speakerId)));
         quote.setCreated(LocalDateTime.now());
 
-        return toQuoteDto(quoteRepository.save(quote));
+        return toQuoteFullDto(quoteRepository.save(quote));
     }
 
     @Override
-    public QuoteDto getQuote(Long id) {
-        return toQuoteDto(
-                quoteRepository.findById(id).orElseThrow(() -> new DataNotFoundException("Quote", id))
+    public QuoteFullDto getQuote(Long id) {
+        Quote quote = quoteRepository.findById(id).orElseThrow(() -> new DataNotFoundException("Quote", id));
+
+        return toQuoteFullDto(
+                quote
         );
     }
 
@@ -57,7 +59,7 @@ public class QuoteServiceImpl implements QuoteService {
     }
 
     @Override
-    public List<QuoteDto> getQuotes(List<Long> ids, Integer from, Integer size) {
+    public List<QuoteDto> getQuotes(Integer from, Integer size) {
         return quoteRepository.findAll(new MyPageRequest(from, size)).stream()
                 .map(QuoteMapper::toQuoteDto)
                 .collect(Collectors.toList());

@@ -5,6 +5,9 @@ import com.kretsev.test_task.vote.dto.VoteDto;
 import com.kretsev.test_task.vote.dto.VoteShortDto;
 import com.kretsev.test_task.vote.model.Vote;
 
+import static com.kretsev.test_task.quote.mapper.QuoteMapper.toQuoteDto;
+import static com.kretsev.test_task.user.mapper.UserMapper.toUserDto;
+
 public class VoteMapper {
     private VoteMapper() {
         throw new IllegalStateException("Utility class");
@@ -15,8 +18,8 @@ public class VoteMapper {
                 vote.getId(),
                 vote.getPositive() != null ? vote.getPositive() : !vote.getNegative(),
                 vote.getCreated(),
-                vote.getVoter(),
-                vote.getQuote()
+                toUserDto(vote.getVoter()),
+                toQuoteDto(vote.getQuote())
         );
     }
 

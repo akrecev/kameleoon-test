@@ -13,12 +13,12 @@ public interface QuoteRepository extends JpaRepository<Quote, Long> {
     Optional<Quote> findRandom();
 
     @Query("SELECT q FROM Quote q ORDER BY " +
-            "(SELECT COUNT (COUNT(v.positive) - COUNT(v.negative)) FROM Vote v WHERE  v.quote = q) " +
+            "(SELECT COUNT(v.positive) - COUNT(v.negative) FROM Vote v WHERE  v.quote = q) DESC " +
             "LIMIT 10")
     List<Quote> findTopQuotes();
 
     @Query("SELECT q FROM Quote q ORDER BY " +
-            "(SELECT COUNT (COUNT(v.negative) - COUNT(v.positive)) FROM Vote v WHERE  v.quote = q) " +
+            "(SELECT COUNT(v.negative) - COUNT(v.positive) FROM Vote v WHERE  v.quote = q) DESC " +
             "LIMIT 10")
     List<Quote> findWorseQuotes();
 

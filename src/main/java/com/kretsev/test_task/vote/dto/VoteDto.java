@@ -1,7 +1,8 @@
 package com.kretsev.test_task.vote.dto;
 
-import com.kretsev.test_task.quote.model.Quote;
-import com.kretsev.test_task.user.model.User;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.kretsev.test_task.quote.dto.QuoteDto;
+import com.kretsev.test_task.user.dto.UserDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,7 +15,8 @@ import java.time.LocalDateTime;
 public class VoteDto {
     private Long id;
     private Boolean positive;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime created;
-    private User voter;
-    private Quote quote;
+    private UserDto voter;
+    private QuoteDto quote;
 }
